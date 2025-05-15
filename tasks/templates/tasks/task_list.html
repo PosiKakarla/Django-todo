@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>To-Do List</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+  <div class="container">
+    <h1>📝 My To-Do List</h1>
+
+    <div class="form-container">
+      <form method="post">
+        {% csrf_token %} 
+        {{ form.as_p }}
+        <button type="submit">➕ Add Task</button>
+      </form>
+    </div>
+
+    <ul class="task-list">
+      {% for task in tasks %}
+        <li class="task-item {% if task.completed %}completed{% endif %}">
+          <span class="task-title">{{ task.title }}</span>
+          {% if task.description %}
+            <span class="task-desc"> - {{ task.description }}</span>
+          {% endif %}
+          <span class="task-date">(Created: {{ task.created|date:"F d, Y" }})</span>
+          <a class="toggle-btn" href="{% url 'task_toggle' task.pk %}">
+            {% if task.completed %}🔄 Undo{% else %}✅ Mark as Completed{% endif %}
+          </a>
+        </li>
+      {% empty %}
+        <li class="no-task">📭 No tasks yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
+
