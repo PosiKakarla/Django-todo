@@ -7,7 +7,7 @@ class TaskForm(forms.ModelForm):
         fields = ["title","description"]
         widgets ={
             'title' : forms.TextInput(attrs={"placeholder":"Enter task title"}),
-            'description':forms.Textarea(attrs={"placeholder":"Enter description"})
+            'description':forms.Textarea(attrs={"placeholder":"Enter description (optional)",'rows':3})
         }
     
         
